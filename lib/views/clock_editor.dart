@@ -4,6 +4,7 @@ import 'package:strontianite/enums/clock_type.dart';
 import 'package:strontianite/providers/clock_type_provider.dart';
 import 'package:strontianite/providers/settings_provider.dart';
 import 'package:strontianite/views/clock.dart';
+import 'package:strontianite/views/wallpapers_selector.dart';
 
 class ClockEditor extends ConsumerStatefulWidget {
   const ClockEditor({super.key});
@@ -50,27 +51,45 @@ class _ClockEditorState extends ConsumerState<ClockEditor> {
                 ],
               ),
             ),
-            SwitchListTile(
-              value: displayBatteryIndicator,
-              title: const Text('Display battery indicator'),
-              subtitle: const Text(
-                'Display battery indicator in the top right of the screen',
-              ),
-              onChanged: (value) {
-                ref
-                    .read(settingsProvider.notifier)
-                    .updateBatteryPreference(value);
-              },
-            ),
-            SwitchListTile(
-              value: isHorizontal,
-              title: const Text('Horizontal clock face'),
-              subtitle: const Text('Set clock face orientation to horizontal'),
-              onChanged: (value) {
-                ref
-                    .read(settingsProvider.notifier)
-                    .updateHorizontalPreference(value);
-              },
+            Column(
+              children: [
+                ListTile(
+                  title: const Text('Wallpapers'),
+                  subtitle: const Text('Discover and select wallpapers'),
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => WallpapersSelector(),
+                      ),
+                    );
+                  },
+                ),
+                SwitchListTile(
+                  value: displayBatteryIndicator,
+                  title: const Text('Display battery indicator'),
+                  subtitle: const Text(
+                    'Display battery indicator in the top right of the screen',
+                  ),
+                  onChanged: (value) {
+                    ref
+                        .read(settingsProvider.notifier)
+                        .updateBatteryPreference(value);
+                  },
+                ),
+                SwitchListTile(
+                  value: isHorizontal,
+                  title: const Text('Horizontal clock face'),
+                  subtitle: const Text(
+                    'Set clock face orientation to horizontal',
+                  ),
+                  onChanged: (value) {
+                    ref
+                        .read(settingsProvider.notifier)
+                        .updateHorizontalPreference(value);
+                  },
+                ),
+              ],
             ),
           ],
         ),

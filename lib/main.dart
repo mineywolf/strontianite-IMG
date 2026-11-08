@@ -7,6 +7,7 @@ import 'package:scaled_app/scaled_app.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:strontianite/handlers/alarms_handler.dart';
 import 'package:strontianite/handlers/audio_handler.dart';
+import 'package:strontianite/handlers/wallpapers_handler.dart';
 import 'package:strontianite/utils/ytm_utils.dart';
 import 'package:strontianite/views/desktop.dart';
 
@@ -44,6 +45,7 @@ void main() async {
   );
 
   AlarmsHandler.init();
+  WallpapersHandler.init();
 
   runApp(
     UncontrolledProviderScope(container: container, child: const MainApp()),
