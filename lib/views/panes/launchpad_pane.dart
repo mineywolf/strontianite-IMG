@@ -140,20 +140,19 @@ class _LaunchpadPaneState extends State<LaunchpadPane> {
         children: [
           Material(
             color: Colors.transparent,
-            child: InkWell(
-              onTap: () {
-                launch();
-              },
-              borderRadius: BorderRadius.circular(100),
-              child: Ink(
-                width: 64,
-                height: 64,
-                decoration: BoxDecoration(
-                  color: Theme.of(context).colorScheme.surface,
-                  borderRadius: BorderRadius.circular(100),
-                ),
-                padding: EdgeInsets.all(8),
-                child: icon,
+            child: Ink(
+              width: 64,
+              height: 64,
+              decoration: BoxDecoration(
+                color: Theme.of(context).colorScheme.surface,
+                borderRadius: BorderRadius.circular(100),
+              ),
+              child: InkWell(
+                onTap: () {
+                  launch();
+                },
+                borderRadius: BorderRadius.circular(100),
+                child: Padding(padding: const EdgeInsets.all(8), child: icon),
               ),
             ),
           ),

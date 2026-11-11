@@ -40,21 +40,18 @@ class _ClockState extends ConsumerState<Clock> {
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
         isHorizontal ? _buildClockHorizontal() : _buildClockVertical(),
-        Padding(
-          padding: const EdgeInsets.only(top: 16),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Text(
-                DateFormat('EEEE, MMMM d').format(_currentTime),
-                style: TextStyle(
-                  color: Theme.of(context).colorScheme.onSurface,
-                  fontVariations: [FontVariation('ROND', 100)],
-                ),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Text(
+              DateFormat('EEEE, MMMM d').format(_currentTime),
+              style: TextStyle(
+                color: Theme.of(context).colorScheme.onSurface,
+                fontVariations: [FontVariation('ROND', 100)],
               ),
-            ],
-          ),
+            ),
+          ],
         ),
       ],
     );

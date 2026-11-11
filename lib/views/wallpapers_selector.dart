@@ -1,14 +1,17 @@
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:material_3_expressive/material_3_expressive.dart';
 import 'package:material_ui/material_ui.dart';
 import 'package:strontianite/handlers/wallpapers_handler.dart';
+import 'package:strontianite/providers/wallpapers_provider.dart';
 
-class WallpapersSelector extends StatefulWidget {
+class WallpapersSelector extends ConsumerStatefulWidget {
   const WallpapersSelector({super.key});
 
   @override
-  State<WallpapersSelector> createState() => _WallpapersSelectorState();
+  ConsumerState<WallpapersSelector> createState() => _WallpapersSelectorState();
 }
 
-class _WallpapersSelectorState extends State<WallpapersSelector> {
+class _WallpapersSelectorState extends ConsumerState<WallpapersSelector> {
   late List<String> _wallpapers;
 
   @override
@@ -42,6 +45,33 @@ class _WallpapersSelectorState extends State<WallpapersSelector> {
                 itemCount: _wallpapers.length,
                 separatorBuilder: (context, index) => SizedBox(width: 16),
                 itemBuilder: (context, index) {
+                  if (index == 0) {
+                    return SizedBox(
+                      width: 300,
+                      child: Material(
+                        color: Colors.transparent,
+                        borderRadius: BorderRadius.circular(16),
+                        clipBehavior: Clip.antiAlias,
+                        child: Ink(
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(16),
+                          ),
+                          child: InkWell(
+                            borderRadius: BorderRadius.circular(16),
+                            child: Column(
+                              children: [const Icon(M3EIcons.block_rounded)],
+                            ),
+                            onTap: () async {
+                              await ref
+                                  .read(wallpapersProvider.notifier)
+                                  .updateWallpaper('');
+                            },
+                          ),
+                        ),
+                      ),
+                    );
+                  }
+
                   final w = _wallpapers[index];
                   return SizedBox(
                     width: 300,
@@ -59,7 +89,11 @@ class _WallpapersSelectorState extends State<WallpapersSelector> {
                         ),
                         child: InkWell(
                           borderRadius: BorderRadius.circular(16),
-                          onTap: () {},
+                          onTap: () async {
+                            await ref
+                                .read(wallpapersProvider.notifier)
+                                .updateWallpaper(w);
+                          },
                         ),
                       ),
                     ),
