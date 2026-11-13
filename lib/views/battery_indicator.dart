@@ -39,10 +39,10 @@ class _BatteryIndicatorState extends State<BatteryIndicator> {
           width: 24,
           height: 16,
           child: Stack(
-            alignment: AlignmentGeometry.center,
+            alignment: Alignment.center,
             children: [
               Stack(
-                alignment: AlignmentGeometry.centerLeft,
+                alignment: Alignment.centerLeft,
                 children: [
                   Container(
                     decoration: BoxDecoration(

@@ -2,6 +2,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:material_ui/material_ui.dart';
 import 'package:strontianite/providers/clock_type_provider.dart';
 import 'package:strontianite/providers/settings_provider.dart';
+import 'package:strontianite/providers/wallpaper_theme_provider.dart';
 import 'package:strontianite/providers/wallpapers_provider.dart';
 import 'package:strontianite/views/battery_indicator.dart';
 import 'package:strontianite/views/clock.dart';
@@ -17,6 +18,7 @@ class ClockPane extends ConsumerWidget {
       settingsProvider.select((state) => state.displayBatteryIndicator),
     );
     final wallpaper = ref.watch(wallpapersProvider);
+    final themeData = ref.watch(wallpaperThemeProvider).value;
 
     return GestureDetector(
       onLongPress: () {
@@ -44,18 +46,20 @@ class ClockPane extends ConsumerWidget {
               Padding(
                 padding: const EdgeInsets.all(16),
                 child: Align(
-                  alignment: AlignmentGeometry.centerRight,
+                  alignment: Alignment.centerRight,
                   child: SizedBox(
                     width: 32,
                     height: 16,
                     child: Stack(
-                      alignment: AlignmentGeometry.center,
+                      alignment: Alignment.center,
                       children: [const BatteryIndicator()],
                     ),
                   ),
                 ),
               ),
-            Expanded(child: Clock(clockType: clockType)),
+            Expanded(
+              child: Clock(clockType: clockType, themeData: themeData),
+            ),
           ],
         ),
       ),

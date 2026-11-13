@@ -2,14 +2,16 @@ import 'dart:async';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
+import 'package:material_3_expressive/material_3_expressive.dart';
 import 'package:material_ui/material_ui.dart';
 import 'package:strontianite/enums/clock_type.dart';
 import 'package:strontianite/providers/settings_provider.dart';
 
 class Clock extends ConsumerStatefulWidget {
-  const Clock({super.key, required this.clockType});
+  const Clock({super.key, required this.clockType, this.themeData});
 
   final ClockType clockType;
+  final M3EThemeData? themeData;
 
   @override
   ConsumerState<Clock> createState() => _ClockState();
@@ -47,7 +49,9 @@ class _ClockState extends ConsumerState<Clock> {
             Text(
               DateFormat('EEEE, MMMM d').format(_currentTime),
               style: TextStyle(
-                color: Theme.of(context).colorScheme.onSurface,
+                color:
+                    ((widget.themeData?.colorScheme.onSurface) ??
+                    (Theme.of(context).colorScheme.onSurface)),
                 fontVariations: [FontVariation('ROND', 100)],
               ),
             ),
@@ -83,7 +87,7 @@ class _ClockState extends ConsumerState<Clock> {
       case ClockType.rotationgx:
         return 'RotationGX';
       case ClockType.rubyRegular:
-        return 'Ruby Regu;ar';
+        return 'Ruby Regular';
     }
   }
 
@@ -98,7 +102,9 @@ class _ClockState extends ConsumerState<Clock> {
             fontFamily: _getFont(widget.clockType),
             fontSize: 112,
             height: 0.9,
-            color: Theme.of(context).colorScheme.primary,
+            color:
+                ((widget.themeData?.colorScheme.primary) ??
+                (Theme.of(context).colorScheme.primary)),
             fontVariations: [FontVariation('ROND', 100)],
             fontFeatures: [FontFeature.tabularFigures()],
           ),
@@ -109,7 +115,9 @@ class _ClockState extends ConsumerState<Clock> {
             fontFamily: _getFont(widget.clockType),
             fontSize: 112,
             height: 0.9,
-            color: Theme.of(context).colorScheme.primary,
+            color:
+                ((widget.themeData?.colorScheme.primary) ??
+                (Theme.of(context).colorScheme.primary)),
             fontVariations: [FontVariation('ROND', 100)],
             fontFeatures: [FontFeature.tabularFigures()],
           ),
@@ -125,7 +133,9 @@ class _ClockState extends ConsumerState<Clock> {
         fontFamily: _getFont(widget.clockType),
         fontSize: 128,
         height: 0.9,
-        color: Theme.of(context).colorScheme.primary,
+        color:
+            ((widget.themeData?.colorScheme.primary) ??
+            (Theme.of(context).colorScheme.primary)),
         fontVariations: [FontVariation('ROND', 100)],
         fontFeatures: [FontFeature.tabularFigures()],
       ),

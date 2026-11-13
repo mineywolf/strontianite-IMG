@@ -58,8 +58,21 @@ class _WallpapersSelectorState extends ConsumerState<WallpapersSelector> {
                           ),
                           child: InkWell(
                             borderRadius: BorderRadius.circular(16),
-                            child: Column(
-                              children: [const Icon(M3EIcons.block_rounded)],
+                            child: const Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              spacing: 8,
+                              children: [
+                                Icon(M3EIcons.block_rounded),
+                                Text(
+                                  'No wallpaper',
+                                  style: TextStyle(
+                                    fontVariations: [
+                                      FontVariation('ROND', 100),
+                                    ],
+                                  ),
+                                ),
+                              ],
                             ),
                             onTap: () async {
                               await ref

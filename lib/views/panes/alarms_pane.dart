@@ -36,7 +36,7 @@ class _AlarmsPaneState extends ConsumerState<AlarmsPane> {
                 ),
               )
             : Align(
-                alignment: AlignmentGeometry.topCenter,
+                alignment: Alignment.topCenter,
                 child: SingleChildScrollView(
                   padding: const EdgeInsets.all(16),
                   child: Column(
