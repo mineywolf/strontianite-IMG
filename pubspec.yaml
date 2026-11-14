@@ -11,6 +11,7 @@ dependencies:
   audio_service: ^0.18.19
   audio_service_mpris: ^0.2.1
   battery_plus: ^7.1.2
+  build_runner: ^2.15.1
   collection: ^1.19.1
   cron: ^0.6.2
   darttubefix: ^1.0.8
@@ -24,6 +25,8 @@ dependencies:
   installed_apps: ^2.2.1
   installed_apps_plugin: ^0.0.3
   intl: ^0.20.3
+  json_annotation: ^4.12.0
+  json_serializable: ^6.15.2
   just_audio: ^0.10.6
   just_audio_media_kit: ^2.1.0
   just_tooltip: ^0.4.4

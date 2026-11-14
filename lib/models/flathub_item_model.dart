@@ -1,3 +1,6 @@
+import 'package:json_annotation/json_annotation.dart';
+
+@JsonSerializable()
 class FlathubItemModel {
   FlathubItemModel({
     required this.name,
@@ -43,7 +46,7 @@ class FlathubItemModel {
   final int addedAt;
   final int? installsLastMonth;
   final int? favouritesCount;
-  final bool isMobileFriendly;
+  final bool? isMobileFriendly;
 
   factory FlathubItemModel.fromJson(Map<String, dynamic> json) {
     return FlathubItemModel(

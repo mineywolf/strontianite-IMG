@@ -18,4 +18,6 @@ class MarketUtils {
     }
     return apps;
   }
+
+  static 
 }
