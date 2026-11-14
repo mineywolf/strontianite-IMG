@@ -7,6 +7,7 @@ import 'package:strontianite/views/panel.dart';
 import 'package:strontianite/views/panes/alarms_pane.dart';
 import 'package:strontianite/views/panes/clock_pane.dart';
 import 'package:strontianite/views/panes/launchpad_pane.dart';
+import 'package:strontianite/views/panes/market_pane.dart';
 import 'package:strontianite/views/panes/media_pane.dart';
 import 'package:strontianite/views/panes/ytm_pane.dart';
 
@@ -24,6 +25,7 @@ class _DesktopState extends State<Desktop> {
     AlarmsPane(),
     YtmPane(),
     LaunchpadPane(),
+    MarketPane(),
   ];
   late PageController _pageController;
 

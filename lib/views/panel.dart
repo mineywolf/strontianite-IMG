@@ -65,6 +65,13 @@ class Panel extends StatelessWidget {
                 switchPane(4);
               },
             ),
+            AppIcon(
+              name: 'Market',
+              icon: M3EIcons.shop_rounded,
+              exec: () {
+                switchPane(5);
+              },
+            ),
           ],
         ),
       ),
