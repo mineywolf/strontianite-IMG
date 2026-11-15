@@ -26,24 +26,24 @@ class FlathubItemModel {
     required this.isMobileFriendly,
   });
 
-  final String name;
+  final String? name;
   final List<dynamic>? keywords;
   final String? summary;
   final String? description;
-  final String id;
+  final String? id;
   final String? type;
   final String? projectLicense;
   final bool? isFreeLicense;
-  final String appId;
-  final String icon;
+  final String? appId;
+  final String? icon;
   final String? mainCatagories;
   final String? subCatagories;
   final String? developerName;
   final bool? verificationVerified;
   final String? runtime;
-  final int updatedAt;
+  final int? updatedAt;
   final List<dynamic> arches;
-  final int addedAt;
+  final int? addedAt;
   final int? installsLastMonth;
   final int? favouritesCount;
   final bool? isMobileFriendly;

@@ -8,9 +8,9 @@ part of 'flathub_release_model.dart';
 
 FlathubReleaseModel _$FlathubReleaseModelFromJson(Map<String, dynamic> json) =>
     FlathubReleaseModel(
-      timestamp: json['timestamp'] as String,
-      version: json['version'] as String,
-      type: json['type'] as String,
+      timestamp: json['timestamp'] as String?,
+      version: json['version'] as String?,
+      type: json['type'] as String?,
     );
 
 Map<String, dynamic> _$FlathubReleaseModelToJson(

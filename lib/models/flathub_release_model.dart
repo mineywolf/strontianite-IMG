@@ -10,9 +10,9 @@ class FlathubReleaseModel {
     required this.type,
   });
 
-  final String timestamp;
-  final String version;
-  final String type;
+  final String? timestamp;
+  final String? version;
+  final String? type;
 
   factory FlathubReleaseModel.fromJson(Map<String, dynamic> json) =>
       _$FlathubReleaseModelFromJson(json);

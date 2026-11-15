@@ -11,10 +11,10 @@ class FlathubScreenshotModel {
     required this.src,
   });
 
-  final String width;
-  final String height;
-  final String scale;
-  final String src;
+  final String? width;
+  final String? height;
+  final String? scale;
+  final String? src;
 
   factory FlathubScreenshotModel.fromJson(Map<String, dynamic> json) =>
       _$FlathubScreenshotModelFromJson(json);

@@ -9,10 +9,10 @@ part of 'flathub_screenshot_model.dart';
 FlathubScreenshotModel _$FlathubScreenshotModelFromJson(
   Map<String, dynamic> json,
 ) => FlathubScreenshotModel(
-  width: json['width'] as String,
-  height: json['height'] as String,
-  scale: json['scale'] as String,
-  src: json['src'] as String,
+  width: json['width'] as String?,
+  height: json['height'] as String?,
+  scale: json['scale'] as String?,
+  src: json['src'] as String?,
 );
 
 Map<String, dynamic> _$FlathubScreenshotModelToJson(

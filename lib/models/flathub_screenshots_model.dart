@@ -6,12 +6,12 @@ part 'flathub_screenshots_model.g.dart';
 @JsonSerializable(explicitToJson: true)
 class FlathubScreenshotsModel {
   FlathubScreenshotsModel({
-    required this.screenshots,
+    required this.sizes,
     required this.caption,
     required this.isDefault,
   });
 
-  final List<FlathubScreenshotModel> screenshots;
+  final List<FlathubScreenshotModel>? sizes;
   final String? caption;
   final bool? isDefault;
 

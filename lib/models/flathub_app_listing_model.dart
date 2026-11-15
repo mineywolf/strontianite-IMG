@@ -1,4 +1,6 @@
 import 'package:json_annotation/json_annotation.dart';
+import 'package:strontianite/models/flathub_bundle_model.dart';
+import 'package:strontianite/models/flathub_content_rating_model.dart';
 import 'package:strontianite/models/flathub_icon_model.dart';
 import 'package:strontianite/models/flathub_release_model.dart';
 import 'package:strontianite/models/flathub_screenshots_model.dart';
@@ -25,25 +27,34 @@ class FlathubAppListingModel {
     required this.isFreeLicense,
     required this.isMobileFriendly,
     required this.isEol,
+    required this.contentRatingDetails,
+    required this.bundle,
   });
 
-  final String type;
-  final String id;
-  final String name;
+  final String? type;
+  final String? id;
+  final String? name;
   final String? summary;
   final String? description;
+  @JsonKey(name: 'developer_name')
   final String? developerName;
   final String? icon;
   final List<FlathubIconModel>? icons;
-  final FlathubScreenshotsModel? screenshots;
+  final List<FlathubScreenshotsModel>? screenshots;
   final List<FlathubReleaseModel>? releases;
-  final List<Map<String, String>>? urls;
+  final Map<String, String?>? urls;
   final List<String>? categories;
   final List<String>? keywords;
+  @JsonKey(name: 'project_license')
   final String? projectLicense;
+  @JsonKey(name: 'is_free_license')
   final bool? isFreeLicense;
   final bool? isMobileFriendly;
+  @JsonKey(name: 'is_eol')
   final bool? isEol;
+  @JsonKey(name: 'content_rating_details')
+  final Map<String, FlathubContentRatingModel?>? contentRatingDetails;
+  final FlathubBundleModel? bundle;
 
   factory FlathubAppListingModel.fromJson(Map<String, dynamic> json) =>
       _$FlathubAppListingModelFromJson(json);

@@ -6,15 +6,15 @@ part 'flathub_icon_model.g.dart';
 class FlathubIconModel {
   FlathubIconModel({
     required this.url,
+    this.width,
     required this.height,
-    required this.scale,
-    required this.src,
+    this.type,
   });
 
-  final String url;
-  final String height;
-  final String scale;
-  final String src;
+  final String? url;
+  final int? width;
+  final int? height;
+  final String? type;
 
   factory FlathubIconModel.fromJson(Map<String, dynamic> json) =>
       _$FlathubIconModelFromJson(json);

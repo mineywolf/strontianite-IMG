@@ -8,16 +8,16 @@ part of 'flathub_icon_model.dart';
 
 FlathubIconModel _$FlathubIconModelFromJson(Map<String, dynamic> json) =>
     FlathubIconModel(
-      url: json['url'] as String,
-      height: json['height'] as String,
-      scale: json['scale'] as String,
-      src: json['src'] as String,
+      url: json['url'] as String?,
+      width: (json['width'] as num?)?.toInt(),
+      height: (json['height'] as num?)?.toInt(),
+      type: json['type'] as String?,
     );
 
 Map<String, dynamic> _$FlathubIconModelToJson(FlathubIconModel instance) =>
     <String, dynamic>{
       'url': instance.url,
+      'width': instance.width,
       'height': instance.height,
-      'scale': instance.scale,
-      'src': instance.src,
+      'type': instance.type,
     };

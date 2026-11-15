@@ -9,37 +9,47 @@ part of 'flathub_app_listing_model.dart';
 FlathubAppListingModel _$FlathubAppListingModelFromJson(
   Map<String, dynamic> json,
 ) => FlathubAppListingModel(
-  type: json['type'] as String,
-  id: json['id'] as String,
-  name: json['name'] as String,
+  type: json['type'] as String?,
+  id: json['id'] as String?,
+  name: json['name'] as String?,
   summary: json['summary'] as String?,
   description: json['description'] as String?,
-  developerName: json['developerName'] as String?,
+  developerName: json['developer_name'] as String?,
   icon: json['icon'] as String?,
   icons: (json['icons'] as List<dynamic>?)
       ?.map((e) => FlathubIconModel.fromJson(e as Map<String, dynamic>))
       .toList(),
-  screenshots: json['screenshots'] == null
-      ? null
-      : FlathubScreenshotsModel.fromJson(
-          json['screenshots'] as Map<String, dynamic>,
-        ),
+  screenshots: (json['screenshots'] as List<dynamic>?)
+      ?.map((e) => FlathubScreenshotsModel.fromJson(e as Map<String, dynamic>))
+      .toList(),
   releases: (json['releases'] as List<dynamic>?)
       ?.map((e) => FlathubReleaseModel.fromJson(e as Map<String, dynamic>))
       .toList(),
-  urls: (json['urls'] as List<dynamic>?)
-      ?.map((e) => Map<String, String>.from(e as Map))
-      .toList(),
+  urls: (json['urls'] as Map<String, dynamic>?)?.map(
+    (k, e) => MapEntry(k, e as String?),
+  ),
   categories: (json['categories'] as List<dynamic>?)
       ?.map((e) => e as String)
       .toList(),
   keywords: (json['keywords'] as List<dynamic>?)
       ?.map((e) => e as String)
       .toList(),
-  projectLicense: json['projectLicense'] as String?,
-  isFreeLicense: json['isFreeLicense'] as bool?,
+  projectLicense: json['project_license'] as String?,
+  isFreeLicense: json['is_free_license'] as bool?,
   isMobileFriendly: json['isMobileFriendly'] as bool?,
-  isEol: json['isEol'] as bool?,
+  isEol: json['is_eol'] as bool?,
+  contentRatingDetails:
+      (json['content_rating_details'] as Map<String, dynamic>?)?.map(
+        (k, e) => MapEntry(
+          k,
+          e == null
+              ? null
+              : FlathubContentRatingModel.fromJson(e as Map<String, dynamic>),
+        ),
+      ),
+  bundle: json['bundle'] == null
+      ? null
+      : FlathubBundleModel.fromJson(json['bundle'] as Map<String, dynamic>),
 );
 
 Map<String, dynamic> _$FlathubAppListingModelToJson(
@@ -50,16 +60,20 @@ Map<String, dynamic> _$FlathubAppListingModelToJson(
   'name': instance.name,
   'summary': instance.summary,
   'description': instance.description,
-  'developerName': instance.developerName,
+  'developer_name': instance.developerName,
   'icon': instance.icon,
   'icons': instance.icons?.map((e) => e.toJson()).toList(),
-  'screenshots': instance.screenshots?.toJson(),
+  'screenshots': instance.screenshots?.map((e) => e.toJson()).toList(),
   'releases': instance.releases?.map((e) => e.toJson()).toList(),
   'urls': instance.urls,
   'categories': instance.categories,
   'keywords': instance.keywords,
-  'projectLicense': instance.projectLicense,
-  'isFreeLicense': instance.isFreeLicense,
+  'project_license': instance.projectLicense,
+  'is_free_license': instance.isFreeLicense,
   'isMobileFriendly': instance.isMobileFriendly,
-  'isEol': instance.isEol,
+  'is_eol': instance.isEol,
+  'content_rating_details': instance.contentRatingDetails?.map(
+    (k, e) => MapEntry(k, e?.toJson()),
+  ),
+  'bundle': instance.bundle?.toJson(),
 };
