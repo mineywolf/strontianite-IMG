@@ -1,3 +1,6 @@
+import 'dart:io';
+
+import 'package:installed_apps/installed_apps.dart';
 import 'package:material_ui/material_ui.dart';
 import 'package:material_3_expressive/material_3_expressive.dart';
 import 'package:strontianite/views/app_icon.dart';
@@ -69,7 +72,18 @@ class Panel extends StatelessWidget {
               name: 'Market',
               icon: M3EIcons.shop_rounded,
               exec: () {
-                switchPane(5);
+                if (Platform.isLinux) {
+                  switchPane(5);
+                } else if (Platform.isAndroid) {
+                  InstalledApps.startApp('com.android.vending');
+                }
+              },
+            ),
+            AppIcon(
+              name: 'Quick Settings',
+              icon: M3EIcons.settings_rounded,
+              exec: () {
+                switchPane(6);
               },
             ),
           ],

@@ -9,6 +9,7 @@ import 'package:strontianite/views/panes/clock_pane.dart';
 import 'package:strontianite/views/panes/launchpad_pane.dart';
 import 'package:strontianite/views/panes/market_pane.dart';
 import 'package:strontianite/views/panes/media_pane.dart';
+import 'package:strontianite/views/panes/quick_settings_pane.dart';
 import 'package:strontianite/views/panes/ytm_pane.dart';
 
 class Desktop extends StatefulWidget {
@@ -26,6 +27,7 @@ class _DesktopState extends State<Desktop> {
     YtmPane(),
     LaunchpadPane(),
     MarketPane(),
+    QuickSettingsPane(),
   ];
   late PageController _pageController;
 
