@@ -57,7 +57,7 @@ class _LaunchpadPaneState extends State<LaunchpadPane> {
                 hintText: 'Search installed apps',
               );
             },
-            suggestionsBuilder: ((context, controller) async {
+            suggestionsBuilder: ((context, controller) {
               return _installedApps
                   .where(
                     (a) => a.name.trim().toLowerCase().contains(

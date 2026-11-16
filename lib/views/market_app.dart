@@ -1,5 +1,6 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter_html/flutter_html.dart';
+import 'package:material_3_expressive/components/buttons/enums/m3e_button_enums.dart';
 import 'package:material_3_expressive/material_3_expressive.dart';
 import 'package:material_ui/material_ui.dart';
 import 'package:strontianite/models/flathub_app_listing_model.dart';
@@ -19,8 +20,8 @@ class MarketApp extends StatefulWidget {
 class _MarketAppState extends State<MarketApp> {
   FlathubAppListingModel? _appListingModel;
   bool _isLoading = false;
-  bool _isInstalling = false;
-  double? _percentageInstalled = 0;
+  bool _isOperationInProgress = false;
+  double? _percentageComplete = 0;
   bool _isInstalled = false;
 
   @override
@@ -83,37 +84,85 @@ class _MarketAppState extends State<MarketApp> {
                                   ],
                                 ),
                               ),
-                              _isInstalling
+                              _isOperationInProgress
                                   ? M3EProgressIndicator.circularWavy(
-                                      value: _percentageInstalled,
+                                      value: _percentageComplete,
                                     )
-                                  : M3EButton.filled(
-                                      onPressed: () async {
-                                        if (_appListingModel!.bundle == null) {
-                                          return;
-                                        }
-                                        setState(() {
-                                          _percentageInstalled = null;
-                                          _isInstalling = true;
-                                        });
-                                        await MarketUtils.installApp(
-                                          _appListingModel!.id!,
-                                          onProgress: (percent) {
-                                            debugPrint(
-                                              'Percentage installed: $percent',
-                                            );
-                                            setState(() {
-                                              _percentageInstalled = percent;
-                                            });
-                                          },
-                                        );
-                                        setState(() {
-                                          _isInstalling = false;
-                                          _percentageInstalled = null;
-                                        });
-                                      },
-                                      child: const Text('Install'),
-                                    ),
+                                  : (_isInstalled
+                                        ? M3EButton.icon(
+                                            style: M3EButtonStyle.tonal,
+                                            onPressed: () async {
+                                              if (_appListingModel!.bundle ==
+                                                  null) {
+                                                return;
+                                              }
+                                              setState(() {
+                                                _percentageComplete = null;
+                                                _isOperationInProgress = true;
+                                              });
+                                              final success =
+                                                  await MarketUtils.uninstallApp(
+                                                    _appListingModel!.id!,
+                                                    onProgress: (percent) {
+                                                      debugPrint(
+                                                        'Percentage uninstalled: $percent',
+                                                      );
+                                                      setState(() {
+                                                        _percentageComplete =
+                                                            percent;
+                                                      });
+                                                    },
+                                                  );
+                                              setState(() {
+                                                _isOperationInProgress = false;
+                                                _percentageComplete = null;
+                                                if (success) {
+                                                  _isInstalled = false;
+                                                }
+                                              });
+                                            },
+                                            label: const Text('Uninstall'),
+                                            icon: const Icon(
+                                              M3EIcons.delete_rounded,
+                                            ),
+                                          )
+                                        : M3EButton.icon(
+                                            style: M3EButtonStyle.filled,
+                                            onPressed: () async {
+                                              if (_appListingModel!.bundle ==
+                                                  null) {
+                                                return;
+                                              }
+                                              setState(() {
+                                                _percentageComplete = null;
+                                                _isOperationInProgress = true;
+                                              });
+                                              final success =
+                                                  await MarketUtils.installApp(
+                                                    _appListingModel!.id!,
+                                                    onProgress: (percent) {
+                                                      debugPrint(
+                                                        'Percentage installed: $percent',
+                                                      );
+                                                      setState(() {
+                                                        _percentageComplete =
+                                                            percent;
+                                                      });
+                                                    },
+                                                  );
+                                              setState(() {
+                                                _isOperationInProgress = false;
+                                                _percentageComplete = null;
+                                                if (success) {
+                                                  _isInstalled = true;
+                                                }
+                                              });
+                                            },
+                                            label: const Text('Install'),
+                                            icon: const Icon(
+                                              M3EIcons.install_desktop_rounded,
+                                            ),
+                                          )),
                             ],
                           ),
                           Row(

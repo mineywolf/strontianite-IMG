@@ -36,7 +36,10 @@ class MarketUtils {
 
   static Future<List<FlathubItemModel>> getPopularApps() async {
     final uri = Uri.parse('https://flathub.org/api/v2/collection/popular');
-    final response = await http.get(uri);
+    final response = await http.get(
+      uri,
+      headers: {'Content-Type': 'application/json'},
+    );
     debugPrint('Response: ${response.body}');
     final List<dynamic> items = jsonDecode(response.body)['hits'];
     final List<FlathubItemModel> apps = [];
@@ -50,14 +53,17 @@ class MarketUtils {
     FlathubItemModel item,
   ) async {
     final uri = Uri.parse('https://flathub.org/api/v2/appstream/${item.appId}');
-    final response = await http.get(uri);
+    final response = await http.get(
+      uri,
+      headers: {'Content-Type': 'application/json'},
+    );
     debugPrint('Listing data: ${response.body}');
     final json = jsonDecode(response.body);
     final listing = FlathubAppListingModel.fromJson(json);
     return listing;
   }
 
-  static Future<void> installApp(
+  static Future<bool> installApp(
     String id, {
     Function(double percent)? onProgress,
   }) async {
@@ -110,9 +116,47 @@ class MarketUtils {
       } else {
         debugPrint('Installation failed: ${e.message}');
       }
+      return false;
     }
 
-    await _client.close();
+    return true;
+  }
+
+  static Future<bool> uninstallApp(
+    String id, {
+    Function(double percent)? onProgress,
+  }) async {
+    final ref = 'app/$id/$_arch/stable';
+
+    final tx = _client.uninstall(ref);
+
+    final ops = <String, String>{};
+    var opNum = 0;
+
+    await for (final p in tx.progress) {
+      if (!ops.containsKey(p.ref)) {
+        opNum++;
+        ops[p.ref] = p.status;
+        final parts = p.ref.split('/');
+        final id = parts.length >= 2 ? parts[1] : p.ref;
+        final branch = parts.length >= 4 ? parts[3] : '';
+        final opChar = p.op == 'uninstall' ? '-' : p.op[0];
+        debugPrint(' $opNum. [$opChar] ${id.padRight(40)} $branch');
+        if (onProgress != null) {
+          onProgress(p.progressPercent / 100);
+        }
+      }
+    }
+
+    try {
+      await tx.result;
+      debugPrint('Uninstall complete.');
+    } on FlatpakTransactionException catch (e) {
+      debugPrint('Uninstall failed: ${e.message}');
+      return false;
+    }
+
+    return true;
   }
 
   static Future<bool> isInstalled(String id) async {
@@ -124,5 +168,23 @@ class MarketUtils {
           return id;
         })
         .contains(id);
+  }
+
+  static Future<List<FlathubItemModel>> searchApps(String query) async {
+    if (query.isEmpty) return await getPopularApps();
+
+    final uri = Uri.parse('https://flathub.org/api/v2/search');
+    final response = await http.post(
+      uri,
+      headers: {'Content-Type': 'application/json'},
+      body: jsonEncode({'query': query}),
+    );
+    debugPrint('Response: ${response.body}');
+    final List<dynamic> items = jsonDecode(response.body)['hits'] ?? [];
+    final List<FlathubItemModel> apps = [];
+    for (final app in items) {
+      apps.add(FlathubItemModel.fromJson(app));
+    }
+    return apps;
   }
 }

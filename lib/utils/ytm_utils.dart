@@ -34,6 +34,7 @@ class YtmUtils {
   static final _lyricsClient = LyricsHttpClient();
 
   static Future<List<String>> getSuggestions(String query) async {
+    if (query.isEmpty) return [];
     debugPrint('Searching: $query');
     final suggestions = await _yt.search.getQuerySuggestions(query);
     _lastSuggestions = suggestions;
