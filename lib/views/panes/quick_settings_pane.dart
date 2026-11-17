@@ -35,7 +35,7 @@ class QuickSettingsPane extends StatelessWidget {
                 icon: M3EIcons.power_settings_new_rounded,
                 color: Color.fromARGB(255, 244, 67, 54),
                 onPressed: () {
-                  Process.run('shutdown', ['--now']);
+                  Process.run('systemctl', ['poweroff']);
                 },
               ),
             ],
