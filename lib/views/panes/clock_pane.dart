@@ -1,5 +1,7 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:material_ui/material_ui.dart';
+import 'package:strontianite/handlers/wallpapers_handler.dart';
 import 'package:strontianite/providers/clock_type_provider.dart';
 import 'package:strontianite/providers/settings_provider.dart';
 import 'package:strontianite/providers/wallpaper_theme_provider.dart';
@@ -31,10 +33,16 @@ class ClockPane extends ConsumerWidget {
       child: Container(
         decoration: BoxDecoration(
           color: Theme.of(context).colorScheme.surface,
-          image: wallpaper.isEmpty
+          image: wallpaper.url.isEmpty
               ? null
               : DecorationImage(
-                  image: AssetImage(wallpaper),
+                  image: wallpaper.online
+                      ? CachedNetworkImageProvider(
+                          WallpapersHandler.buildOnlineWallpaperUrl(
+                            wallpaper.url,
+                          ),
+                        )
+                      : AssetImage(wallpaper.url),
                   fit: BoxFit.cover,
                 ),
         ),

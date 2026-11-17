@@ -12,6 +12,7 @@ dependencies:
   audio_service_mpris: ^0.2.1
   battery_plus: ^7.1.2
   build_runner: ^2.15.1
+  cached_network_image: ^3.4.1
   carousel_slider: ^5.1.2
   collection: ^1.19.1
   cron: ^0.6.2
