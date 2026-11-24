@@ -1,0 +1,40 @@
+name: Build IMG
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    container:
+      image: fedora:latest
+      options: --privileged
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install tools
+        run: |
+          dnf install -y osbuild-composer composer-cli xz
+          /usr/libexec/osbuild-composer/osbuild-composer &
+          sleep 5
+
+      - name: Build IMG
+        run: |
+          composer-cli blueprints push blueprint-home.toml
+          UUID=$(composer-cli compose start strontium-home raw | awk '{print $2}')
+          while true; do
+            STATUS=$(composer-cli compose info $UUID | grep "Queue status:" | awk '{print $3}')
+            if [ "$STATUS" = "FINISHED" ]; then break; fi
+            if [ "$STATUS" = "FAILED" ]; then exit 1; fi
+            sleep 15
+          done
+          composer-cli compose image $UUID
+          unxz ${UUID}-disk.raw.xz
+          mv ${UUID}-disk.raw strontium-home.img
+
+      - name: Save IMG for Download
+        uses: actions/upload-artifact@v4
+        with:
+          name: strontium-home-img
+          path: strontium-home.img
